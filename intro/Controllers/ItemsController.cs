@@ -1,4 +1,4 @@
-﻿using intro.Data;
+﻿using intro.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intro.Controllers
@@ -7,20 +7,18 @@ namespace intro.Controllers
     [ApiController]
     public class ItemsController : ControllerBase
     {
-        private readonly AppDbContext _context;
+        private readonly IItemService _itemService;
 
-        public ItemsController(AppDbContext context)
+        public ItemsController(IItemService itemService)
         {
-            _context = context;
+            _itemService = itemService;
         }
 
         [HttpPost]
         public ActionResult<Item> CreateItem([FromBody] Item item)
         {
-            var response =  _context.Items.Add(item);
-            _context.SaveChanges();
-            
-            return NoContent();
+            _itemService.CreateItem(item);
+            return Ok(item);
         }
 
 
@@ -28,17 +26,22 @@ namespace intro.Controllers
         [HttpGet]
         public ActionResult<List<Item>> GetItems()
         {
-            var response = _context.Items.ToList();
+            var response = _itemService.GetAllItems();
             return Ok(response);
         }
 
         [HttpDelete("id")]
-        public ActionResult DeleteItem([FromQuery]int id)
+        public ActionResult DeleteItem([FromQuery] int id)
         {
-            var itemToDelete = _context.Items.FirstOrDefault(x => x.Id == id); 
-            _context.Items.Remove(itemToDelete);
-            _context.SaveChanges();
+            
+            _itemService.DeleteItem(id);
+            return NoContent();
+        }
 
+        [HttpPut("{id}")]
+        public ActionResult UpdateItem(int id, [FromBody] Item item)
+        {
+            _itemService.UpdateItem(id, item);
             return NoContent();
         }
     }
