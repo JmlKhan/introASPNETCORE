@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using intro.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace intro.Data
 {
@@ -10,5 +11,17 @@ namespace intro.Data
         }
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+
+        public DbSet<BlogHeader> BlogsHeaders { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Blog>()
+                .HasOne(e => e.Header)
+                .WithOne(e => e.Blog)
+                .HasForeignKey<BlogHeader>(e => e.BlogId)
+                .IsRequired(false);
+        }
     }
 }
