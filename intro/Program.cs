@@ -9,7 +9,10 @@ var config = builder.Services.Configure<ConnectionStrings>(builder.Configuration
 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql("Host=localhost;Database=introDB;Username=postgres;Password=1234"));
-
+builder.Services.AddControllersWithViews()
+    .AddNewtonsoftJson(options =>
+        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+    );
 
 // Add services to the container.
 builder.Services.AddScoped<IItemService, ItemService>();

@@ -6,3 +6,8 @@ public class BlogHeader
     public int BlogId { get; set; } // Required foreign key property
     public Blog? Blog { get; set; } = null!; // Required reference navigation to principal
 }
+
+public class BlogHeaderDTO
+{
+    public int BlogId { get; set; }
+}
