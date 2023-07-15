@@ -1,4 +1,6 @@
-﻿using intro.Services;
+﻿using intro.DTOs;
+using intro.Models;
+using intro.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace intro.Controllers
@@ -15,18 +17,27 @@ namespace intro.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Item> CreateItem([FromBody] Item item)
+        public ActionResult<Item> CreateItem([FromBody] ItemRequestDTO item)
         {
-            _itemService.CreateItem(item);
+            var newItem = new Item()
+            {
+                ItemGuid = Guid.NewGuid(),
+                Name = item.Name,
+                Description = item.Description,
+                SensitiveData = item.SensitiveData,
+            };
+
+            _itemService.CreateItem(newItem);
             return Ok(item);
         }
 
 
 
         [HttpGet]
-        public ActionResult<List<Item>> GetItems()
+        public ActionResult<List<ItemsResponseDTO>> GetItems()
         {
-            var response = _itemService.GetAllItems();
+            var items = _itemService.GetAllItems();
+            var response = items.Select(i => new ItemsResponseDTO(i)).ToList();
             return Ok(response);
         }
 

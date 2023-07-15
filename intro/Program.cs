@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Services.Configure<ConnectionStrings>(builder.Configuration.GetSection("ConnectionStrings"));
 
 
-builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql("Host=localhost;Database=introDB;Username=postgres;Password=1234"));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql("Host=localhost;Database=outroDB;Username=postgres;Password=1234"));
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
         options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore

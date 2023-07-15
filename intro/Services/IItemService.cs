@@ -8,7 +8,7 @@ namespace intro.Services
         public List<Item> GetAllItems();
         public Item GetItem(int id);
 
-        public void DeleteItem( int id);
+        public void DeleteItem(int id);
 
         public void UpdateItem(int id, Item item);
     }
