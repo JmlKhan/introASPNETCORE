@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using intro.Data;
@@ -11,9 +12,10 @@ using intro.Data;
 namespace intro.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230718131833_studentAndGrade")]
+    partial class studentAndGrade
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +139,7 @@ namespace intro.Migrations
             modelBuilder.Entity("intro.Models.Student", b =>
                 {
                     b.HasOne("intro.Models.Grade", "Grade")
-                        .WithMany("Students")
+                        .WithMany()
                         .HasForeignKey("GradeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -148,11 +150,6 @@ namespace intro.Migrations
             modelBuilder.Entity("intro.Models.Blog", b =>
                 {
                     b.Navigation("Header");
-                });
-
-            modelBuilder.Entity("intro.Models.Grade", b =>
-                {
-                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

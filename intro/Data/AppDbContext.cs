@@ -12,6 +12,8 @@ namespace intro.Data
 
         public DbSet<Item> Items { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Grade> Grades { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public DbSet<BlogHeader> BlogsHeaders { get; set; }
 
