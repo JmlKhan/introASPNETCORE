@@ -1,4 +1,5 @@
-﻿using intro.DTOs;
+﻿using intro.Data;
+using intro.DTOs;
 using intro.Models;
 using intro.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,15 @@ namespace intro.Controllers
     public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;
+        private static AppDbContext _context;
 
-        public ItemsController(IItemService itemService)
+
+        public ItemsController(IItemService itemService, AppDbContext context)
         {
+            _context = context;
             _itemService = itemService;
         }
+
 
         [HttpPost]
         public ActionResult<Item> CreateItem([FromBody] ItemRequestDTO item)
