@@ -1,6 +1,0 @@
-﻿namespace intro
-{
-    public class Akbarov
-    {
-    }
-}
